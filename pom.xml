@@ -120,6 +120,9 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+
+
 
         <dependency>
             <groupId>junit</groupId>
