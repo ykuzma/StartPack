@@ -38,6 +38,10 @@ public class PlayerValidator implements Validator {
             throw new PlayerBadRequestException();
         }
 
+        if(player.getBirthday().getTime() < 0) {
+            throw new PlayerBadRequestException();
+        }
+
 
     }
 }
