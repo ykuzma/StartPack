@@ -109,7 +109,7 @@ public class PlayerController {
                                                    @PathVariable("id") long id) {
         playerService.save(player, id);
         return ResponseEntity.ok(HttpStatus.OK);
-                ;
+
     }
 
 }

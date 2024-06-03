@@ -69,7 +69,21 @@ public class PlayerService {
     }
     @Transactional
     public void save(Player player) {
-        playerRepository.save(player);
+
+        playerRepository.save(setExpForNextLevel(setLevel(player)));
+    }
+
+    private Player setLevel(Player player) {
+        int exp = player.getExperience();
+        player.setLevel(((int)Math.sqrt(2500 + 200 * exp) - 50) / 100);
+        return player;
+    }
+
+    private Player setExpForNextLevel(Player player) {
+        int level = player.getLevel();
+        int exp = player.getExperience();
+        player.setUntilNextLevel(50 * (level + 1) * (level + 2) - exp);
+        return player;
     }
 
 }
