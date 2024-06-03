@@ -97,11 +97,11 @@ public class PlayerController {
     }
 
     @PostMapping("/players")
-    public ResponseEntity<HttpStatus> createPlayer(@RequestBody Player player, BindingResult bindingResult) {
+    public ResponseEntity<Player> createPlayer(@RequestBody Player player, BindingResult bindingResult) {
         playerValidator.validate(player, bindingResult);
 
         playerService.save(player);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new ResponseEntity<>(player, HttpStatus.OK);
     }
 
     @PostMapping("/players/{id}")
@@ -109,6 +109,7 @@ public class PlayerController {
                                                    @PathVariable("id") long id) {
         playerService.save(player, id);
         return ResponseEntity.ok(HttpStatus.OK);
+                ;
     }
 
 }
