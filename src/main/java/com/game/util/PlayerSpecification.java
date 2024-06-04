@@ -4,7 +4,13 @@ import com.game.entity.Player;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;
+import javax.xml.crypto.Data;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PlayerSpecification {
@@ -42,6 +48,16 @@ public class PlayerSpecification {
                 int max = criteria.getMaxLevel() != null ? criteria.getMaxLevel() : 60;
                 predicates.add(criteriaBuilder.between(root.get("level"), min,
                         max));
+            }
+            if(criteria.getAfter() != null || criteria.getBefore() != null){
+                Date after = criteria.getAfter() != null ?
+                        new Date(criteria.getAfter()) :
+                       new Date(70, 0, 1);
+                Date before = criteria.getBefore() != null ?
+                        new Date(criteria.getBefore()) :
+                        new Date(1100, 0, 1);
+                predicates.add(criteriaBuilder.between(root.get("birthday"), after,
+                        before));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

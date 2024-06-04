@@ -38,7 +38,9 @@ public class PlayerService {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(order.getFieldName()));
         Specification<Player> spec = PlayerSpecification.getFilterPlayer(criteria);
         players = playerRepository.findAll(spec, pageRequest).getContent();
-
+        for (Player p: players) {
+            System.out.println(p.getName());
+        }
         return players;
     }
 
@@ -63,9 +65,12 @@ public class PlayerService {
     }
 
     @Transactional
-    public void save(Player player, long id) {
-        player.setId(id);
-        playerRepository.save(player);
+    public void update(Player player, long id) {
+
+            player.setId(id);
+            playerRepository.save(player);
+
+
     }
     @Transactional
     public void save(Player player) {

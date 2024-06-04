@@ -85,13 +85,17 @@ public class PlayerController {
 
     @GetMapping("/players/{id}")
     public Player getPlayerById (@PathVariable("id") long id) {
-
+        if(id < 1) {
+            throw new PlayerBadRequestException();
+        }
         return playerService.findById(id);
     }
 
     @DeleteMapping("/players/{id}")
     public void deletePlayerById (@PathVariable("id")  long id) {
-
+        if(id < 1) {
+            throw new PlayerBadRequestException();
+        }
         playerService.deleteById(id);
 
     }
@@ -105,10 +109,14 @@ public class PlayerController {
     }
 
     @PostMapping("/players/{id}")
-    public ResponseEntity<HttpStatus> updatePlayer(@RequestBody Player player,
+    public ResponseEntity<Player> updatePlayer(@RequestBody Player player,
                                                    @PathVariable("id") long id) {
-        playerService.save(player, id);
-        return ResponseEntity.ok(HttpStatus.OK);
+        if(id < 1) {
+            throw new PlayerBadRequestException();
+        }
+        playerService.findById(id);
+        playerService.update(player, id);
+        return new ResponseEntity<>(player, HttpStatus.OK);
 
     }
 
